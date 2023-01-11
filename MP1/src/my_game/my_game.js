@@ -37,19 +37,36 @@ class MyGame {
         engine.drawCircle(red, [col3, row3], scale3);
         engine.drawCircle(green, [col4, row3], scale4);
         engine.drawCircle(blue, [col5, row3], scale5);
+
+        /* Code for Drawing a House
+        engine.drawSquare(brown, [0, -0.5], [1, 1]);
+        engine.drawTriangle(brown, [0, 0.5], [1, 1]);
+        engine.drawSquare(green, [0, -0.7], [0.25,0.6]);
+        engine.drawCircle(black, [0.07, -0.75], [0.05, 0.05]);
+        engine.drawSquare(black, [0.125, -0.7], [0.01, 0.6]);
+        engine.drawSquare(black, [-0.125, -0.7], [0.01, 0.6]);
+        engine.drawSquare(black, [0, -0.4], [0.25, 0.01]);
+        engine.drawSquare(white, [0, 0.3], [0.3, 0.3]);
+        engine.drawSquare(black, [0, 0], [1, 0.01]);
+        engine.drawSquare(black, [0, 0.45], [0.3, 0.01]);
+        engine.drawSquare(black, [0, 0.15], [0.3, 0.01]);
+        engine.drawSquare(black, [0, 0.3], [0.01, 0.3]);
+        engine.drawSquare(black, [0.15, 0.3], [0.01, 0.3]);
+        engine.drawSquare(black, [-0.15, 0.3], [0.01, 0.3]);
+         */
     }
 }
 
 /* Colors */
 let black = [0, 0, 0, 1];
 let red = [1, 0 , 0, 1];
-let brown = [0.59, 0.29, 0, 1];
+let brown = [0.70, 0.40, 0.11, 1];
 let pink = [1, 0.75, 0.80, 1];
 let blue = [0, 0, 1, 1];
 let green = [0, 1, 0, 1];
+let white = [1, 1, 1, 1];
 
 /* Positions */
-
 let row1 = 0.6; // Top Row;
 let row2 = 0;
 let row3 = -0.6;
@@ -61,7 +78,6 @@ let col4 = 0.07;
 let col5 = 0.65; // rightmost column
 
 /* Scales */
-
 let scale1 = [0.1, 0.3];
 let scale2 = [0.3, 0.1];
 let scale3 = [0.2, 0.25];

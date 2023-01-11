@@ -18,8 +18,9 @@ class SimpleShader {
         this.mCompiledShader = null;  // reference to the compiled shader in webgl context
         this.mVertexPositionRef = null; // reference to VertexPosition within the shader
         this.mPixelColorRef = null;     // reference to the pixelColor uniform in the fragment shader
-        this.mScaleRef = null;
-        this.mOffsetRef = null;
+        this.mScaleRef = null;  // reference to scale in vertex shader
+        this.mOffsetRef = null; // reference to offset in vertex shader
+
         let gl = core.getGL();
         //
         // Step A: load and compile vertex and fragment shaders

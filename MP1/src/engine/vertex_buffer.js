@@ -33,15 +33,23 @@ let mVerticesOfTriangle = [
 let mCircleNumVertex = 100;
 
 let mVerticesOfCircle = [];
-function createCirclesArray() {
-    var delta = (2.0 * Math.PI) / (mCircleNumVertex - 1);
-    for (let i = 1; i <= mCircleNumVertex; i++) {
-        var angle = (i-1) * delta;
-        mVerticesOfCircle.push(0.5 * Math.cos(angle));
-        mVerticesOfCircle.push(0.5 * Math.sin(angle));
-        mVerticesOfCircle.push(0);
+/* Can easily use this function to create many round shapes
+   Can use to draw a hexagon, circle, etc, just pass in array and number of sides + 1
+   Had to push 0 at the end for circle to be filled in, otherwise it looks fuzzy. 
+ */
+function createCircleShapeArray(array, numOfVertices) {
+    let delta = (2.0 * Math.PI) / (numOfVertices - 1);
+    for (let i = 1; i <= numOfVertices; i++) {
+        let angle = (i-1) * delta;
+        array.push(0.5 * Math.cos(angle));
+        array.push(0.5 * Math.sin(angle));
+        array.push(0);
     }
 }
+
+let mHexagonNumVertex = 7;
+
+let mVerticesOfHexagon = [];
 
 function drawTriangle() {
     let gl = core.getGL();
@@ -72,7 +80,7 @@ function drawSquare() {
 function drawCircle() {
     let gl = core.getGL();
 
-    createCirclesArray();
+    createCircleShapeArray(mVerticesOfCircle, mCircleNumVertex);
 
     // Step A: Create a buffer on the gl context for our vertex positions
     mGLVertexBuffer = gl.createBuffer();
@@ -84,5 +92,20 @@ function drawCircle() {
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(mVerticesOfCircle), gl.STATIC_DRAW);
 }
 
+function drawHexagon() {
+    let gl = core.getGL();
+
+    createCircleShapeArray(mVerticesOfHexagon, mHexagonNumVertex);
+
+    // Step A: Create a buffer on the gl context for our vertex positions
+    mGLVertexBuffer = gl.createBuffer();
+
+    // Step B: Activate vertexBuffer
+    gl.bindBuffer(gl.ARRAY_BUFFER, mGLVertexBuffer);
+
+    // Step C: Loads mVerticesOfSquare into the vertexBuffer
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(mVerticesOfHexagon), gl.STATIC_DRAW);
+}
+
 // export these symbols
-export {drawTriangle, get, drawSquare, drawCircle}
+export {drawTriangle, get, drawSquare, drawCircle, drawHexagon}

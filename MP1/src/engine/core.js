@@ -70,8 +70,13 @@ function drawCircle(color, offset, scale) {
     vertexBuffer.drawCircle();
     mShader.activate(color, offset, scale);
     mGL.drawArrays(mGL.TRIANGLE_FAN, 0, 100);
-
 }
 
+/* Drawing Hexagon with 6 vertices */
+function drawHexagon(color, offset, scale) {
+    vertexBuffer.drawHexagon();
+    mShader.activate(color, offset, scale);
+    mGL.drawArrays(mGL.TRIANGLE_FAN, 0, 6);
+}
 // export these symbols
-export { getGL, init, clearCanvas, drawSquare, drawTriangle, drawCircle}
+export { getGL, init, clearCanvas, drawSquare, drawTriangle, drawCircle, drawHexagon}
