@@ -13,7 +13,7 @@ class MyGame {
         engine.init(htmlCanvasID);
 
         // Step B: Clear the canvas
-        engine.clearCanvas(pink);
+        engine.clearCanvas(darkGrey);
 
         this.drawSquareRow();
         this.drawTriangleRow();
@@ -24,36 +24,40 @@ class MyGame {
     drawSquareRow() {
         /* Drawing the top row */
         engine.drawSquare(black, [col1, row1], scale1);
-        engine.drawSquare(brown, [col2, row1], scale2);
-        engine.drawSquare(red, [col3, row1], scale3);
-        engine.drawSquare(green, [col4, row1], scale4);
-        engine.drawSquare(blue, [col5, row1], scale5);
+        engine.drawSquare(lightRed, [col2, row1], scale2);
+        engine.drawSquare(orange, [col3, row1], scale3);
+        engine.drawSquare(pink, [col4, row1], scale4);
+        engine.drawSquare(skyBlue, [col5, row1], scale5);
     }
 
     drawTriangleRow() {
         /* Drawing Middle Row */
         engine.drawTriangle(black, [col1, row2], scale1);
-        engine.drawTriangle(brown, [col2, row2], scale2);
-        engine.drawTriangle(red, [col3, row2], scale3);
-        engine.drawTriangle(green, [col4, row2], scale4);
-        engine.drawTriangle(blue, [col5, row2], scale5);
+        engine.drawTriangle(lightRed, [col2, row2], scale2);
+        engine.drawTriangle(orange, [col3, row2], scale3);
+        engine.drawTriangle(pink, [col4, row2], scale4);
+        engine.drawTriangle(skyBlue, [col5, row2], scale5);
     }
 
     drawCircleRow() {
         /* Drawing Last Row */
         engine.drawCircle(black, [col1, row3], scale1);
-        engine.drawCircle(brown, [col2, row3], scale2);
-        engine.drawCircle(red, [col3, row3], scale3);
-        engine.drawCircle(green, [col4, row3], scale4);
-        engine.drawCircle(blue, [col5, row3], scale5);
+        engine.drawCircle(lightRed, [col2, row3], scale2);
+        engine.drawCircle(orange, [col3, row3], scale3);
+        engine.drawCircle(pink, [col4, row3], scale4);
+        engine.drawCircle(skyBlue, [col5, row3], scale5);
     }
 
     drawHouse() {
         /* Code for Drawing a House */
 
+        /* Background Sky */
+        engine.drawSquare(skyBlue, [0, 0.3], [2, 1.5]);
+        engine.drawSquare(grassGreen, [0, -0.8], [2, 0.8]);
+
         /* Base House */
         engine.drawSquare(brown, [0, -0.5], [1, 1]);
-        engine.drawTriangle(brown, [0, 0.5], [1, 1]);
+        engine.drawTriangle(darkGrey, [0, 0.5], [1, 1]);
 
         /* Door */
         engine.drawSquare(green, [0, -0.7], [0.25, 0.6]);
@@ -81,21 +85,23 @@ class MyGame {
         engine.drawCircle(white, [0.8, 0.82], [0.2, 0.2]);
         engine.drawCircle(white, [0.7, 0.82], [0.2, 0.2]);
         engine.drawCircle(white, [0.6, 0.82], [0.2, 0.2]);
-
-
-
     }
 }
 
 /* Colors */
 let black = [0, 0, 0, 1];
 let red = [1, 0, 0, 1];
+let lightRed = [1, 0.4, 0.4, 1];
+let orange = [1, 0.6, 0.5, 1];
 let brown = [0.70, 0.40, 0.11, 1];
 let pink = [1, 0.75, 0.80, 1];
 let blue = [0, 0, 1, 1];
 let green = [0, 1, 0, 1];
+let grassGreen = [0.5, 0.80, 0.31, 1];
 let white = [1, 1, 1, 1];
 let yellow = [1, 1, 0, 1];
+let skyBlue = [0.53, 0.80, 0.92, 1];
+let darkGrey = [0.35, 0.35, 0.35, 1];
 
 /* Positions */
 let row1 = 0.6; // Top Row;
