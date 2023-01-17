@@ -1,0 +1,12 @@
+To check extra shape (Hexagon) : 
+
+	1. Go to my_game.js 
+	2. Comment out line 20 and uncomment line 23 
+	3. This should change the circles to Hexagon 
+
+To check the house : 
+
+	1. Go to my_game.js
+	2. Comment out lines 18, 19, 20 and 23
+	3. Uncomment line 24
+	4. You should now see a house
