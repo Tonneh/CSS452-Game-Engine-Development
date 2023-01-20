@@ -23,6 +23,7 @@ let mFrameID = -1;
 // This function loops over draw/update once
 function loopOnce() {
     if (mLoopRunning) {
+        let updateCallCounter = 0;
         // Step A: set up for next call to loopOnce
         mFrameID = requestAnimationFrame(loopOnce);
 
@@ -44,8 +45,10 @@ function loopOnce() {
             input.update();
             mCurrentScene.update();      
             mLagTime -= kMPF;
+            updateCallCounter++;
         }
-
+        gUpdateFrame(elapsedTime, updateCallCounter, mLagTime);
+        this.draw();
     } 
 }
 

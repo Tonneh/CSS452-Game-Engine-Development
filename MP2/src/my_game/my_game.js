@@ -26,8 +26,7 @@ class MyGame {
 
         // We will push an array of shapes into this array
         this.spawnedShapesMatrix = [];
-        this.toDeleteMatrix = [];
-
+        this.amountofSpawnedShapes = 0;
         this.deleteMode = false;
         this.deleteTimer = 0.0;
     }
@@ -75,6 +74,7 @@ class MyGame {
     update() {
         this.input();
         this.squareTimers();
+        gUpdateObject(this.amountofSpawnedShapes, this.deleteMode);
     }
 
     /* Function to handle inputs */
@@ -102,10 +102,9 @@ class MyGame {
             this.drawSquares(redXform.getXPos(), redXform.getYPos());
         }
         if (engine.input.isKeyPressed(engine.input.keys.D)) {
-            if (!this.deleteMode &&this.spawnedShapesMatrix.length !== 0) {
+            if (!this.deleteMode && this.spawnedShapesMatrix.length !== 0) {
                 this.deleteMode = true;
                 this.deleteTimer = this.spawnedShapesMatrix[0][0].getAliveTime();
-                this.toDeleteMatrix = this.spawnedShapesMatrix.slice();
             }
         }
     }
@@ -151,6 +150,7 @@ class MyGame {
             shape.getXform().setSize(Math.random() * 6, Math.random() * 6);
             arr.push(shape);
         }
+        this.amountofSpawnedShapes += arr.length;
         this.spawnedShapesMatrix.push(arr);
     }
 
@@ -162,20 +162,19 @@ class MyGame {
     squareTimers() {
         if (this.deleteMode) {
             this.deleteTimer -= loop.getkMPF();
-            for (let i = 0; i < this.toDeleteMatrix.length; i++) {
-                if (this.toDeleteMatrix[i].length === 0) {
-                    this.toDeleteMatrix.shift();
-                    this.spawnedShapesMatrix.shift();
-                    continue;
-                }
-                for (let j = 0; j < this.toDeleteMatrix[i].length; j++) {
-                    if (this.toDeleteMatrix[i][j].getAliveTime() >= this.deleteTimer) {
-                        this.toDeleteMatrix[i].splice(j, 1);
+            for (let i = 0; i < this.spawnedShapesMatrix.length; i++) {
+                for (let j = 0; j < this.spawnedShapesMatrix[i].length; j++) {
+                    if (this.spawnedShapesMatrix[i][j].getAliveTime() >= this.deleteTimer) {
                         this.spawnedShapesMatrix[i].splice(j, 1);
+                        this.amountofSpawnedShapes--;
                     }
                 }
+                if (this.spawnedShapesMatrix[i].length === 0) {
+                    this.spawnedShapesMatrix.splice(i, 1);
+                    break;
+                }
             }
-            if (this.toDeleteMatrix.length === 0)
+            if (this.spawnedShapesMatrix.length === 0)
                 this.deleteMode = false;
         } else {
             for (let i = 0; i < this.spawnedShapesMatrix.length; i++) {
