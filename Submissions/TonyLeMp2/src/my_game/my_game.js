@@ -39,7 +39,7 @@ class MyGame {
     init() {
         // Step A: set up the cameras
         this.mCamera = new engine.Camera(
-            vec2.fromValues(100, 75),   // position of the camera
+            vec2.fromValues(100, 65),   // position of the camera
             100,                        // width of camera
             [0, 0, 640, 480]         // viewport (orgX, orgY, width, height)
         );
@@ -50,7 +50,7 @@ class MyGame {
         this.mRedSq.setColor([1, 0, 0, 1]);
 
         // This is our cursor
-        this.mRedSq.getXform().setPosition(100, 75);
+        this.mRedSq.getXform().setPosition(100, 65);
         this.mRedSq.getXform().setSize(1, 1);
 
         this.getBorders();
@@ -108,7 +108,8 @@ class MyGame {
             if (engine.input.isKeyClicked(engine.input.keys.Space)) {
                 this.drawSquares(redXform.getXPos(), redXform.getYPos());
             }
-        } else if (!this.currentMode) {
+        }
+        else if (!this.currentMode) {
             if (engine.input.isKeyPressed(engine.input.keys.Space)) {
                 this.drawSquares(redXform.getXPos(), redXform.getYPos());
             }
@@ -150,7 +151,7 @@ class MyGame {
         let max = 20;
         //  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
         // Used this to reference to generate random numbers
-        for (let i = 0; i < Math.floor(Math.random() * max) + min; i++) {
+        for (let i = 0; i < Math.floor(Math.random() * max - min + 1) + min; i++) {
             // create new shape and assign a random color
             let shape = new engine.Renderable();
             let randomColor = [];
