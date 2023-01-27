@@ -43,7 +43,6 @@ class GrayLevel extends engine.Scene {
     unload() {
         // unload the scene flie and loaded resources
         engine.json.unload(this.mSceneFile);
-
     }
 
     // This is the draw function, make sure to setup proper drawing environment, and more

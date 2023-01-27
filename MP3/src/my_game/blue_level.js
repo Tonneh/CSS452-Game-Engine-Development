@@ -9,15 +9,11 @@ import engine from "../engine/index.js";
 // Local stuff
 import MyGame from "./my_game.js";
 import SceneFileParser from "./util/scene_file_parser.js";
-import GrayLevel from "./gray_level";
+import GrayLevel from "./gray_level.js";
 
 class BlueLevel extends engine.Scene {
     constructor() {
         super();
-
-        // audio clips: supports both mp3 and wav formats
-        this.mBackgroundAudio = "assets/sounds/bg_clip.mp3";
-        this.mCue = "assets/sounds/blue_level_cue.wav";
 
         // scene file name
         this.mSceneFile = "assets/blue_level.xml";
@@ -31,8 +27,6 @@ class BlueLevel extends engine.Scene {
 
     load() {
         engine.xml.load(this.mSceneFile);
-        engine.audio.load(this.mBackgroundAudio);
-        engine.audio.load(this.mCue);
     }
 
     init() {
@@ -43,21 +37,12 @@ class BlueLevel extends engine.Scene {
 
         // Step B: Read all the squares
         sceneParser.parseSquares(this.mSQSet);
-
-        // now start the Background music ...
-        engine.audio.playBackground(this.mBackgroundAudio, 0.5);
-
     }
 
     unload() {
-        // stop the background audio
-        engine.audio.stopBackground();
 
         // unload the scene flie and loaded resources
         engine.xml.unload(this.mSceneFile);
-        engine.audio.unload(this.mBackgroundAudio);
-        engine.audio.unload(this.mCue);
-
     }
 
     // This is the draw function, make sure to setup proper drawing environment, and more
@@ -80,7 +65,6 @@ class BlueLevel extends engine.Scene {
 
         // Move right and swap over
         if (engine.input.isKeyPressed(engine.input.keys.Right)) {
-            engine.audio.playCue(this.mCue, 0.5);
             xform.incXPosBy(deltaX);
             if (xform.getXPos() > 30) { // this is the right-bound of the window
                 xform.setPosition(12, 60);
@@ -89,7 +73,6 @@ class BlueLevel extends engine.Scene {
 
         // Step A: test for white square movement
         if (engine.input.isKeyPressed(engine.input.keys.Left)) {
-            engine.audio.playCue(this.mCue, 1.0);
             xform.incXPosBy(-deltaX);
             if (xform.getXPos() < 11) { // this is the left-boundary
                 this.next(); // go back to my game
