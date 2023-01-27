@@ -1,5 +1,5 @@
 /*
- * This is the logic of our game. 
+ * This is the logic of our game.
  */
 
 
@@ -9,18 +9,14 @@ import engine from "../engine/index.js";
 // Local stuff
 import MyGame from "./my_game.js";
 import SceneFileParser from "./util/scene_file_parser.js";
-import GrayLevel from "./gray_level";
+import BlueLevel from "./blue_level.js";
 
-class BlueLevel extends engine.Scene {
+class GrayLevel extends engine.Scene {
     constructor() {
         super();
 
-        // audio clips: supports both mp3 and wav formats
-        this.mBackgroundAudio = "assets/sounds/bg_clip.mp3";
-        this.mCue = "assets/sounds/blue_level_cue.wav";
-
         // scene file name
-        this.mSceneFile = "assets/blue_level.xml";
+        this.mSceneFile = "assets/scene.json";
         // all squares
         this.mSQSet = [];        // these are the Renderable objects
 
@@ -30,13 +26,11 @@ class BlueLevel extends engine.Scene {
 
 
     load() {
-        engine.xml.load(this.mSceneFile);
-        engine.audio.load(this.mBackgroundAudio);
-        engine.audio.load(this.mCue);
+        engine.json.load(this.mSceneFile);
     }
 
     init() {
-        let sceneParser = new SceneFileParser(engine.xml.get(this.mSceneFile));
+        let sceneParser = new SceneFileParser(engine.json.get(this.mSceneFile));
 
         // Step A: Read in the camera
         this.mCamera = sceneParser.parseCamera();
@@ -44,19 +38,11 @@ class BlueLevel extends engine.Scene {
         // Step B: Read all the squares
         sceneParser.parseSquares(this.mSQSet);
 
-        // now start the Background music ...
-        engine.audio.playBackground(this.mBackgroundAudio, 0.5);
-
     }
 
     unload() {
-        // stop the background audio
-        engine.audio.stopBackground();
-
         // unload the scene flie and loaded resources
-        engine.xml.unload(this.mSceneFile);
-        engine.audio.unload(this.mBackgroundAudio);
-        engine.audio.unload(this.mCue);
+        engine.json.unload(this.mSceneFile);
 
     }
 
@@ -80,7 +66,6 @@ class BlueLevel extends engine.Scene {
 
         // Move right and swap over
         if (engine.input.isKeyPressed(engine.input.keys.Right)) {
-            engine.audio.playCue(this.mCue, 0.5);
             xform.incXPosBy(deltaX);
             if (xform.getXPos() > 30) { // this is the right-bound of the window
                 xform.setPosition(12, 60);
@@ -89,7 +74,6 @@ class BlueLevel extends engine.Scene {
 
         // Step A: test for white square movement
         if (engine.input.isKeyPressed(engine.input.keys.Left)) {
-            engine.audio.playCue(this.mCue, 1.0);
             xform.incXPosBy(-deltaX);
             if (xform.getXPos() < 11) { // this is the left-boundary
                 this.next(); // go back to my game
@@ -102,9 +86,9 @@ class BlueLevel extends engine.Scene {
 
     next() {
         super.next();
-        let nextLevel = new GrayLevel();  // load the next level
+        let nextLevel = new BlueLevel();  // load the next level
         nextLevel.start();
     }
 }
 
-export default BlueLevel;
+export default GrayLevel;
