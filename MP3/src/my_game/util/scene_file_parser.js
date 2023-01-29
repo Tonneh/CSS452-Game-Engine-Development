@@ -6,8 +6,8 @@
 import engine from "../../engine/index.js";
 
 class SceneFileParser {
-    
-    constructor (xml) {
+
+    constructor(xml) {
         this.xml = xml
     }
 
@@ -29,7 +29,7 @@ class SceneFileParser {
             vec2.fromValues(cx, cy),  // position of the camera
             w,                        // width of camera
             viewport                  // viewport (orgX, orgY, width, height)
-            );
+        );
         cam.setBackgroundColor(bgColor);
         return cam;
     }
@@ -54,6 +54,31 @@ class SceneFileParser {
             sq.getXform().setRotationInDegree(r); // In Degree
             sq.getXform().setSize(w, h);
             sqSet.push(sq);
+        }
+    }
+
+    parseCameraJSON() {
+        let camElm = this.xml.Camera;
+        let cam = new engine.Camera(
+            camElm.Center,
+            camElm.Width,
+            camElm.Viewport
+        )
+        cam.setBackgroundColor(camElm.BgColor);
+        return cam;
+    }
+
+    parseSquaresJSON(sqSet) {
+        let elm = this.xml.Square;
+        for (let i = 0; i < elm.length; i++) {
+            let square = new engine.Renderable();
+            square.getXform().setPosition(elm[i].Pos[0], elm[i].Pos[1]);
+            square.getXform().setWidth(elm[i].Width);
+            square.getXform().setHeight(elm[i].Height);
+            square.getXform().setRotationInDegree(elm[i].Rotation);
+            square.setColor(elm[i].Color);
+
+            sqSet.push(square);
         }
     }
 }
