@@ -27,5 +27,5 @@ void main(void) {
 
     vTexCoord2 = aTextureCoordinate2;
 
-    vTexCoord3 = aTextureCoordinate3;*/
+    vTexCoord3 = aTextureCoordinate3;
 }

@@ -9,8 +9,8 @@ uniform sampler2D uSampler;
 uniform bool uHasSecondTexture;
 uniform sampler2D uSecondTexture;
 
-/*uniform bool uHasThirdTexture;
-uniform sampler2D uThirdTexture;*/
+uniform bool uHasThirdTexture;
+uniform sampler2D uThirdTexture;
 
 // Color of pixel
 uniform vec4 uPixelColor;
@@ -19,7 +19,7 @@ uniform vec4 uPixelColor;
 // interpolated and thus varies.
 varying vec2 vTexCoord;
 varying vec2 vTexCoord2;
-/*varying vec2 vTexCoord3;*/
+varying vec2 vTexCoord3;
 
 void main(void)  {
     // texel color look up based on interpolated UV value in vTexCoord
@@ -53,7 +53,7 @@ void main(void)  {
         }
     }
 
-   /* if (uHasThirdTexture &&
+    if (uHasThirdTexture &&
     (vTexCoord3.s >= 0.0) &&
     (vTexCoord3.s <= 1.0) &&
     (vTexCoord3.t >= 0.0) &&
@@ -70,8 +70,9 @@ void main(void)  {
             r = r * rWeight + blendColor;
             a = length(blendColor) + ((1.0 - rWeight) * a);
         }
-    }*/
+    }
     vec4 result = vec4(r, a);
+
     // or: ignore pixel tinting ...
     // vec4 result = c;
 

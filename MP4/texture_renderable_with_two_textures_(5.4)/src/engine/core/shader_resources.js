@@ -24,8 +24,8 @@ let mTextureShader = null;
 let mSpriteShader = null;
 
 // Multi Texture Shader
-let kMultiTextureVS = "src/glsl_shaders/texture_vs.glsl";
-let kMultiTextureFS = "src/glsl_shaders/texture_fs.glsl";
+let kMultiTextureVS = "src/glsl_shaders/multi_texture_vs.glsl";
+let kMultiTextureFS = "src/glsl_shaders/multi_texture_fs.glsl";
 let mMultiTextureShader = null;
 import MultiTextureShader from "../shaders/multi_texture_shader.js";
 function createShaders() {
