@@ -23,21 +23,30 @@ let kTextureFS = "src/glsl_shaders/texture_fs.glsl";  // Path to the texture Fra
 let mTextureShader = null;
 let mSpriteShader = null;
 
+// Multi Texture Shader
+let kMultiTextureVS = "src/glsl_shaders/texture_vs.glsl";
+let kMultiTextureFS = "src/glsl_shaders/texture_fs.glsl";
+let mMultiTextureShader = null;
+import MultiTextureShader from "../shaders/multi_texture_shader.js";
 function createShaders() {
     mConstColorShader = new SimpleShader(kSimpleVS, kSimpleFS);
     mTextureShader = new TextureShader(kTextureVS, kTextureFS);
     mSpriteShader = new SpriteShader(kTextureVS, kTextureFS);
+    mMultiTextureShader = new MultiTextureShader(kMultiTextureVS, kMultiTextureFS);
 }
 
 function cleanUp() {
     mConstColorShader.cleanUp();
     mTextureShader.cleanUp();
     mSpriteShader.cleanUp();
+    mMultiTextureShader.cleanUp();
 
     text.unload(kSimpleVS);
     text.unload(kSimpleFS);
     text.unload(kTextureVS);
     text.unload(kTextureFS);
+    text.unload(kMultiTextureFS);
+    text.unload(kMultiTextureVS);
 }
 
 function init() {
@@ -47,7 +56,9 @@ function init() {
                 text.load(kSimpleFS),
                 text.load(kSimpleVS),
                 text.load(kTextureFS),
-                text.load(kTextureVS)
+                text.load(kTextureVS),
+                text.load(kMultiTextureFS),
+                text.load(kMultiTextureVS)
             ]);
             resolve();
         }).then(
@@ -60,5 +71,7 @@ function getConstColorShader() { return mConstColorShader; }
 function getTextureShader() { return mTextureShader; }
 function getSpriteShader() { return mSpriteShader; }
 
+function getMultiTextureShader() { return mMultiTextureShader; }
+
 export {init, cleanUp, 
-        getConstColorShader, getTextureShader, getSpriteShader}
+        getConstColorShader, getTextureShader, getSpriteShader, getMultiTextureShader}

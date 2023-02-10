@@ -26,7 +26,7 @@ class MyGame extends engine.Scene {
         this.mU = 0.5;
         this.mV = 0.5;
         this.mW = 0.3;
-        this.mH = 0.3; 
+        this.mH = 0.3;
         this.mTheta = 0;
     }
 
@@ -40,7 +40,7 @@ class MyGame extends engine.Scene {
     unload() {
         engine.texture.unload(this.kMinionSprite);
         engine.texture.unload(this.kUp);
-        engine.texture.unload(this.KTest);
+        engine.texture.unload(this.kTest);
         engine.texture.unload(this.kBg);
     }
 
@@ -58,22 +58,22 @@ class MyGame extends engine.Scene {
         this.mBg.getXform().setSize(150, 150);
         this.mBg.getXform().setPosition(50, 40);
 
-        this.mTest = new engine.TextureRenderable(this.kTest, this.kUp);
+        this.mTest = new engine.MultiTextureRenderable(this.kTest, this.kUp);
         this.mTest.getXform().setSize(50, 30);
         this.mTest.getXform().setPosition(50, 40);
         this.mTest.setSecondTexture(this.mU, this.mV, this.mW, this.mH, this.mTheta);
 
         this.mHero = new Hero(this.kMinionSprite, 50, 40);
-    
+
         this.mMsg = new engine.FontRenderable("Status Message:");
         this.mMsg.setColor([1, 1, 1, 1]);
         this.mMsg.getXform().setPosition(2, 3);
         this.mMsg.setTextHeight(3);
-        this.mMsg.setText("At:(" 
-                + this.mU.toPrecision(2).toString() + "," 
-                + this.mV.toPrecision(2).toString() + ") Size:(" 
-                + this.mW.toPrecision(2).toString() + "," 
-                + this.mH.toPrecision(2).toString() + ")");
+        this.mMsg.setText("At:("
+            + this.mU.toPrecision(2).toString() + ","
+            + this.mV.toPrecision(2).toString() + ") Size:("
+            + this.mW.toPrecision(2).toString() + ","
+            + this.mH.toPrecision(2).toString() + ")");
     }
 
     // This is the draw function, make sure to setup proper drawing environment, and more
@@ -83,7 +83,7 @@ class MyGame extends engine.Scene {
         engine.clearCanvas([0.9, 0.9, 0.9, 1.0]); // clear to light gray
 
         this.mCamera.setViewAndCameraMatrix();
-        
+
         this.mBg.draw(this.mCamera);
         this.mHero.draw(this.mCamera);
         this.mTest.draw(this.mCamera);
@@ -105,7 +105,7 @@ class MyGame extends engine.Scene {
             if (engine.input.isKeyPressed(engine.input.keys.Shift))
                 this.mH += delta;
             else if (engine.input.isKeyPressed(engine.input.keys.Ctrl))
-                    this.mV += delta;
+                this.mV += delta;
             else xform.incYPosBy(xdelta);
             once = true;
         }
@@ -113,7 +113,7 @@ class MyGame extends engine.Scene {
             if (engine.input.isKeyPressed(engine.input.keys.Shift))
                 this.mH -= delta;
             else if (engine.input.isKeyPressed(engine.input.keys.Ctrl))
-                    this.mV -= delta;
+                this.mV -= delta;
             else xform.incYPosBy(-xdelta);
             once = true;
         }
@@ -121,7 +121,7 @@ class MyGame extends engine.Scene {
             if (engine.input.isKeyPressed(engine.input.keys.Shift))
                 this.mW += delta;
             else if (engine.input.isKeyPressed(engine.input.keys.Ctrl))
-                    this.mU += delta;
+                this.mU += delta;
             else xform.incXPosBy(xdelta);
             once = true;
         }
@@ -129,19 +129,19 @@ class MyGame extends engine.Scene {
             if (engine.input.isKeyPressed(engine.input.keys.Shift))
                 this.mW -= delta;
             else if (engine.input.isKeyPressed(engine.input.keys.Ctrl))
-                    this.mU -= delta;
+                this.mU -= delta;
             else xform.incXPosBy(-xdelta);
             once = true;
         }
         if (once) {
-            this.mTest.setSecondTexture(this.mU, this.mV, this.mW, this.mH, this.mTheta);    
-            this.mMsg.setText("At:(" 
-                + this.mU.toPrecision(2).toString() + "," 
-                + this.mV.toPrecision(2).toString() + ") Size:(" 
-                + this.mW.toPrecision(2).toString() + "," 
+            this.mTest.setSecondTexture(this.mU, this.mV, this.mW, this.mH, this.mTheta);
+            this.mMsg.setText("At:("
+                + this.mU.toPrecision(2).toString() + ","
+                + this.mV.toPrecision(2).toString() + ") Size:("
+                + this.mW.toPrecision(2).toString() + ","
                 + this.mH.toPrecision(2).toString() + ")");
         }
-        
+
     }
 }
 

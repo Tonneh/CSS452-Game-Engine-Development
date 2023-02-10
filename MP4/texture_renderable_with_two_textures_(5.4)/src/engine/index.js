@@ -28,9 +28,10 @@ import TextureRenderable from "./renderables/texture_renderable.js";
 import SpriteRenderable from "./renderables/sprite_renderable.js";
 import SpriteAnimateRenderable from "./renderables/sprite_animate_renderable.js";
 import FontRenderable from "./renderables/font_renderable.js";
+import MultiTextureRenderable from "./renderables/multi_texture_renderable.js";
 import { eTexCoordArrayIndex } from "./renderables/sprite_renderable.js";
 import { eAnimationType } from "./renderables/sprite_animate_renderable.js";
-
+import { eTexEffectFlag } from "./renderables/multi_texture_renderable.js";
 // local to this file only
 import * as glSys from "./core/gl.js";
 import * as vertexBuffer from "./core/vertex_buffer.js";
@@ -76,9 +77,10 @@ export default {
     
     // Renderables
     Renderable, TextureRenderable, SpriteRenderable, SpriteAnimateRenderable, FontRenderable,
+    MultiTextureRenderable,
 
     // constants
-    eTexCoordArrayIndex, eAnimationType,
+    eTexCoordArrayIndex, eAnimationType, eTexEffectFlag,
 
     // functions
     init, cleanUp, clearCanvas
