@@ -49,6 +49,7 @@ class MultiTextureRenderable extends Renderable {
                 break;
             case eTexEffectFlag.eBlend:
                 this.disableArr[index] = false;
+                this.setBlendFactor(index, 0.5);
                 break;
         }
     }
@@ -69,6 +70,7 @@ class MultiTextureRenderable extends Renderable {
     getBlendFactor(index) {
         return this.mTexturesBlendModeArr[index];
     }
+
     draw(aCamera) {
         let en = false;  // for second texture;
         // activate the texture

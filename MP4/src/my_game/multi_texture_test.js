@@ -23,14 +23,17 @@ class MultiTextureTest {
         ];
 
         this.mBlendFactor = [0, 0.4, 0.6];  // blend factors for 1 and 2 (0 is not used)
-        this.mMode = ["None", "Transparent", "Blend"];
-        this.mCurrentMode = null;
+        this.mMode = ["None", "Blend", "Blend"];
+        this.mCurrentModeArr = [];
 
         this.mRenderComponent.setTexAtSize(1, this.mTexParm[1]);
-        this.mRenderComponent.setTexEffectMode(1, engine.eTexEffectFlag.eOverride);
+        this.mRenderComponent.setTexEffectMode(1, engine.eTexEffectFlag.eBlend);
+        this.mCurrentModeArr[1] = engine.eTexEffectFlag.eBlend;
 
         this.mRenderComponent.setTexAtSize(2, this.mTexParm[2]);
-        this.mRenderComponent.setTexEffectMode(2, engine.eTexEffectFlag.eOverride);
+        this.mRenderComponent.setTexEffectMode(2, engine.eTexEffectFlag.eBlend);
+        this.mCurrentModeArr[2] = engine.eTexEffectFlag.eBlend;
+
         // default to setting the renderable
         this.mIndex = 0;
     }
@@ -79,34 +82,34 @@ class MultiTextureTest {
         if (engine.input.isKeyClicked(engine.input.keys.Three)) {
             this.mRenderComponent.setTexEffectMode(this.mIndex, engine.eTexEffectFlag.eNone);
             this.mMode[this.mIndex] = "None";
-            this.mCurrentMode = eTexEffectFlag.eNone;
+            this.mCurrentModeArr[this.mIndex] = eTexEffectFlag.eNone;
             this.mBlendFactor[this.mIndex] = this.mRenderComponent.getBlendFactor(this.mIndex);
         }
         if (engine.input.isKeyClicked(engine.input.keys.Four)) {
             this.mRenderComponent.setTexEffectMode(this.mIndex, engine.eTexEffectFlag.eTransparent);
             this.mMode[this.mIndex] = "Transparent";
-            this.mCurrentMode = eTexEffectFlag.eTransparent;
+            this.mCurrentModeArr[this.mIndex] = eTexEffectFlag.eTransparent;
             this.mBlendFactor[this.mIndex] = this.mRenderComponent.getBlendFactor(this.mIndex);
         }
         if (engine.input.isKeyClicked(engine.input.keys.Five)) {
             this.mRenderComponent.setTexEffectMode(this.mIndex, engine.eTexEffectFlag.eOverride);
             this.mMode[this.mIndex] = "Override";
-            this.mCurrentMode = eTexEffectFlag.eOverride;
+            this.mCurrentModeArr[this.mIndex] = eTexEffectFlag.eOverride;
             this.mBlendFactor[this.mIndex] = this.mRenderComponent.getBlendFactor(this.mIndex);
         }
         if (engine.input.isKeyClicked(engine.input.keys.Six)) {
             this.mRenderComponent.setTexEffectMode(this.mIndex, engine.eTexEffectFlag.eBlend);
             this.mMode[this.mIndex] = "Blend";
-            this.mCurrentMode = eTexEffectFlag.eBlend;
+            this.mCurrentModeArr[this.mIndex] = eTexEffectFlag.eBlend;
             this.mBlendFactor[this.mIndex] = this.mRenderComponent.getBlendFactor(this.mIndex);
         }
 
         once = false;
-        if (engine.input.isKeyPressed(engine.input.keys.N) && this.mCurrentMode === eTexEffectFlag.eBlend) {
+        if (engine.input.isKeyPressed(engine.input.keys.N) && this.mCurrentModeArr[this.mIndex] === engine.eTexEffectFlag.eBlend) {
             this.mBlendFactor[this.mIndex] -= this.kDelta;
             once = true;
         }
-        if (engine.input.isKeyPressed(engine.input.keys.M) && this.mCurrentMode === eTexEffectFlag.eBlend) {
+        if (engine.input.isKeyPressed(engine.input.keys.M) && this.mCurrentModeArr[this.mIndex] === engine.eTexEffectFlag.eBlend) {
             this.mBlendFactor[this.mIndex] += this.kDelta;
             once = true;
         }

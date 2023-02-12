@@ -1,9 +1,3 @@
-/*
- * File: texture_shader.js
- *
- * wrapps over GLSL texture shader, supporting the working with the entire file texture
- *
- */
 "use strict";
 
 import * as glSys from "../core/gl.js";
@@ -139,16 +133,18 @@ class MultiTextureShader extends SimpleShader {
             useLeft, useBot]));
 
         mat3.identity(this.mTexMatArr[index]);
-        mat3.scale(this.mTexMatArr[index], this.mTexMatArr[index], [1.0/w, 1.0/h]); // scale such that top-right is (1, 1)
+        mat3.scale(this.mTexMatArr[index], this.mTexMatArr[index], [ 1.0 / w, 1 / h]); // scale such that top-right is (1, 1)
         mat3.translate(this.mTexMatArr[index], this.mTexMatArr[index], vec2.fromValues(-left, -bottom)); // bottom-left is now (0, 0)
         mat3.translate(this.mTexMatArr[index], this.mTexMatArr[index], vec2.fromValues(u, v)); // return to original position
         mat3.rotate(this.mTexMatArr[index], this.mTexMatArr[index], -t);  // rotation wrt to center of u,v
         mat3.translate(this.mTexMatArr[index], this.mTexMatArr[index], vec2.fromValues(-u, -v));
+
+        mat3.translate(this.mTexMatArr[index], this.mTexMatArr[index], vec2.fromValues(left, bottom));
+        mat3.scale(this.mTexMatArr[index], this.mTexMatArr[index], [w, h]);
     }
 
     _getTexCoordBuffer() {
         return vertexBuffer.getTexCoord();
     }
 }
-
 export default MultiTextureShader;
