@@ -29,6 +29,7 @@ class Hero extends engine.GameObject {
         // control by mouse pos
         let xform = this.getXform();
 
+        // lerp logic (lerp to mouse pos)
         this.lerpX.setFinal(x);
         this.lerpY.setFinal(y);
 
@@ -39,7 +40,9 @@ class Hero extends engine.GameObject {
         this.mYPos = this.lerpY.get();
 
         xform.setPosition(this.mXPos, this.mYPos);
+        // end lerp logic
 
+        // if colliding
         if (this.isOscilating) {
             let val = this.oscilate.getNext();
             xform.setSize(
@@ -62,7 +65,6 @@ class Hero extends engine.GameObject {
     
     CollisionEvent() {
         this.isOscilating = true;
-        console.log("collisin");
     }
 }
 

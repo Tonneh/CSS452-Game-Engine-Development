@@ -23,6 +23,7 @@ class Patrol extends engine.GameObject {
 
         this.isAlive = true;
         this.pushBack = false;
+        this.showBounds = true;
         this.finalXPos = null;
 
         this.mRenderComponent = new engine.SpriteRenderable(spriteTexture);
@@ -90,18 +91,6 @@ class Patrol extends engine.GameObject {
         this.createLines(this.topMinionBB); 
         this.createLines(this.bottomMinionBB); 
         this.createLines(this.mainBB);
-        // this.lines.push(new engine.LineRenderable(
-        //     this.mainBB.maxY, 
-        //     this.mainBB.minY
-        // ));
-        // this.lines.push(new engine.LineRenderable(
-        //     this.mainBB.minX, 
-        //     this.mainBB.minY
-        // ));
-        // this.lines.push(new engine.LineRenderable(
-        //     this.mainBB.minX, 
-        //     this.mainBB.maxY
-        // ));
         for (let i = 0; i < this.lines.length; i++) {
             this.lines[i].setShowLine(true);
         }
@@ -116,7 +105,7 @@ class Patrol extends engine.GameObject {
         // control by mouse pos
         let xform = this.getXform();
 
-        // console.log(xform.getPosition());  
+        // collision event
         if(this.pushBack){
             if(this.mRenderComponent.getXform().getXPos() < this.finalXPos){
                 this.mRenderComponent.getXform().setXPos(this.mRenderComponent.getXform().getXPos() + 1);
@@ -124,37 +113,14 @@ class Patrol extends engine.GameObject {
             }else{
                 this.pushBack = false;
             }
-        }else{
+        } else {
             this.mRenderComponent.setColor([1, 0, 0, 0]);
         }
 
-       
-
-
         if (xform.getXPos() == this.desiredX && xform.getYPos() == this.desiredY) {
-
-            // let diffX = this.desiredX - xform.getXPos();
-            // let diffY = this.desiredY - xform.getYPos();
-            // this.deltaX = diffX / 100;
-            // this.deltaY = diffY / 100;
-
-
-            // this.lerpXBot.setFinal(this.desiredX + 10);
-            // this.lerpYBot.setFinal(this.desiredY - 6);
-
-            // this.lerpXTop.setFinal(this.desiredX + 10);
-            // this.lerpYTop.setFinal(this.desiredY + 6);
-        } else {
-            
-
-
-            //this.mTopMinion.getXform().setPosition(this.lerpXTop.get(), this.lerpYTop.get());
-            //this.mBottomMinion.getXform().setPosition(this.lerpXBot.get(), this.lerpYBot.get());
-            // xform.incXPosBy(this.deltaX);
-            // xform.incYPosBy(this.deltaY);
-            
         }
 
+        // lerp logic to lerp the wings towards the head
         this.lerpXBot.setFinal(xform.getXPos() + 10);
         this.lerpYBot.setFinal(xform.getYPos() - 6);
 
@@ -166,10 +132,13 @@ class Patrol extends engine.GameObject {
 
         this.lerpXTop.update();
         this.lerpYTop.update();
-
+        
         this.mTopWing.getRenderable().getXform().setPosition(this.lerpXBot.get(), this.lerpYTop.get());
         this.mBottomWing.getRenderable().getXform().setPosition(this.lerpXBot.get(), this.lerpYBot.get());
+        // end lerp logic
 
+        
+        // logic to update the bounding box and lines for the head
         this.brainBB.setBounds(
             [this.mRenderComponent.getXform().getXPos(), this.mRenderComponent.getXform().getYPos()], 
             this.mRenderComponent.getXform().getWidth(),
@@ -177,6 +146,7 @@ class Patrol extends engine.GameObject {
         );
         this.editLines([0, 1, 2, 3], this.brainBB);
 
+        // logic to update the bounding box and lines for the top wing
         this.topMinionBB.setBounds(
             [this.mTopMinion.getXform().getXPos(), this.mTopMinion.getXform().getYPos()], 
             this.mTopMinion.getXform().getWidth(),
@@ -184,6 +154,7 @@ class Patrol extends engine.GameObject {
         );
         this.editLines([4, 5, 6, 7], this.topMinionBB);
 
+        // logic to update the bounding box and lines for the bottom wing
         this.bottomMinionBB.setBounds(
             [this.mBottomMinion.getXform().getXPos(), this.mBottomMinion.getXform().getYPos()], 
             this.mBottomMinion.getXform().getWidth(),
@@ -191,6 +162,7 @@ class Patrol extends engine.GameObject {
         );
         this.editLines([8, 9, 10, 11], this.bottomMinionBB); 
 
+         // logic to update the bounding box and lines for the whole patrol
         this.mainBB.setBounds( 
             [((this.bottomMinionBB.maxX() - this.brainBB.minX()) / 2) + this.brainBB.minX(), this.bottomMinionBB.minY() + (this.mainBB.mHeight / 2)], 
             this.bottomMinionBB.maxX() - this.brainBB.minX(), 
@@ -198,13 +170,16 @@ class Patrol extends engine.GameObject {
         );
         this.editLines([12, 13, 14, 15], this.mainBB);
         
+        // animation logic
         this.mBottomMinion.updateAnimation();
         this.mTopMinion.updateAnimation();
 
         this.mTopWing.getRenderable().updateAnimation();
         this.mBottomWing.getRenderable().updateAnimation();
+        // end animation logic
 
 
+        // movemeent logic
         this.mRenderComponent.getXform().incXPosBy(this.mX);
         this.mRenderComponent.getXform().incYPosBy(this.mY);  
         
@@ -213,28 +188,22 @@ class Patrol extends engine.GameObject {
 
         this.mBottomWing.getXform().incXPosBy(this.mX);
         this.mBottomWing.getXform().incYPosBy(this.mY);
-
-        //this.mTopMinion.getXform().incXPosBy(this.mX);
-        //this.mTopMinion.getXform().incYPosBy(this.mY);  
-
-       // this.mBottomMinion.getXform().incXPosBy(this.mX);
-       // this.mBottomMinion.getXform().incYPosBy(this.mY);
+        // end movement logic
     }
 
+    // function to check collision with dye pack
+    // returns true if collision
     checkCollisionWithPack(other) {
-        // console.log(other);
         let arr = [];
         let alpha;
+        // collision check for head
         if (super.pixelTouches(other, arr)) {
             this.pushBack = true;
             this.finalXPos = this.mRenderComponent.getXform().getXPos() + 5;
-            //this.mRenderComponent.getXform().setXPos(this.finalXPos);
             return true;
         }
-        // if (this.mTopMinion.pixelTouches(other, arr)) { // implement this idea
-        //     return true;
-        // }
 
+        // collision check for top wing
         if (this.mTopWing.pixelTouches(other, arr)) {
             alpha = this.mTopMinion.getColor()[3] + 0.2;
             this.mTopMinion.setColor([1, 1, 1, alpha]);
@@ -244,6 +213,7 @@ class Patrol extends engine.GameObject {
             return true;
         }
 
+        // collision check for bottom wing
         if (this.mBottomWing.pixelTouches(other, arr)) {
             alpha = this.mBottomMinion.getColor()[3] + 0.2;
             this.mBottomMinion.setColor([1, 1, 1, alpha]);
@@ -257,6 +227,8 @@ class Patrol extends engine.GameObject {
         return false;
     }
 
+    // functino to check collision with dye
+    // returns true if collision
     checkCollisionWithDye(dye) {
         let arr = [];
         if (super.pixelTouches(dye, arr)) {
@@ -265,6 +237,8 @@ class Patrol extends engine.GameObject {
         return false;
     }
 
+    // function to check collision with another bounding box
+    // returns true if collision
     checkBoundBoxCollision(obj){
         let otherBbox = obj.getBBox();
         if (this.mainBB.boundCollideStatus(otherBbox) > 0) {
@@ -279,18 +253,21 @@ class Patrol extends engine.GameObject {
     }
 
     draw(aCamera){
+        // draw head
         super.draw(aCamera);
-        //this.mBottomMinion.draw(aCamera);
-        //this.mTopMinion.draw(aCamera);
+        // draw wings
         this.mTopWing.draw(aCamera);
         this.mBottomWing.draw(aCamera);
 
-
-        for (let i = 0; i < this.lines.length; i++) {
-            this.lines[i].draw(aCamera);
+        // draw lines
+        if(this.showBounds){
+            for (let i = 0; i < this.lines.length; i++) {
+                this.lines[i].draw(aCamera);
+            }
         }
     }
 
+    // functin to create lines based on bounding box
     createLines(bb)
     {
         let line;
@@ -328,6 +305,7 @@ class Patrol extends engine.GameObject {
         this.lines.push(line); 
     }
 
+    // function to edit lines for bounding box
     editLines(lineNum, bb) 
     {
         let line;
@@ -388,6 +366,17 @@ class Patrol extends engine.GameObject {
 
     getBottomWing(){
         return this.mBottomWing;
+    }
+
+    // function to show/hide lines
+    toggleBounds(){
+        this.showBounds = !this.showBounds;
+    }
+
+    //funciton for hit event 
+    hitHead(){
+        this.pushBack = true;
+        this.finalXPos = this.mRenderComponent.getXform().getXPos() + 5;
     }
 
 

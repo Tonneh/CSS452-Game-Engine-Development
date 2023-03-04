@@ -25,9 +25,13 @@ class DyePack extends engine.GameObject {
 
     update() { 
         let xform = this.getXform(); 
+
+        // travel right
         xform.incXPosBy(this.speed);
+        // after 5 seconds, self destruct
         this.incAliveTime(); 
 
+        // if colliding
         if (this.isOscilating) {
             let val = this.oscilate.getNext();
             xform.setPosition(
